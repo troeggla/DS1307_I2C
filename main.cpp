@@ -237,6 +237,17 @@ void setup() {
 
   Serial.print("Writing block data at 0x00: ");
   Serial.println((writeBytesStartingAt(deviceId, 0x00, 7, data) == true) ? "true" : "false");
+
+  char txt[] = "Hello World";
+  Serial.print("Writing data at 0x10: ");
+  Serial.println((writeBytesStartingAt(deviceId, 0x10, strlen(txt), (byte*)txt) == true) ? "true" : "false");
+
+  byte buf[12];
+  readBytesStartingAt(deviceId, 0x10, 11, buf);
+  buf[11] = '\0';
+
+  Serial.print("Data read from 0x10: ");
+  Serial.println(String((char*)buf));
 }
 
 void loop() {

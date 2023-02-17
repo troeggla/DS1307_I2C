@@ -114,6 +114,31 @@ byte readByteAtAddress(byte deviceId, byte registerAddress) {
   return byte;
 }
 
+bool writeByteAtAddress(byte deviceId, byte registerAddress, byte data) {
+  sendStart();
+  sendDeviceId(deviceId);
+  sendBit(0b0);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  sendByte(registerAddress);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  sendByte(data);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  sendStop();
+  return true;
+}
+
 void setup() {
   Serial.begin(115200);
 
@@ -125,6 +150,9 @@ void setup() {
 
   Serial.print("Byte at address 0x07: 0b");
   Serial.println(readByteAtAddress(deviceId, 0x07), BIN);
+
+  Serial.print("Writing data at 0x00: ");
+  Serial.println((writeByteAtAddress(deviceId, 0x00, 0b01000000) == true) ? "true" : "false");
 }
 
 void loop() {

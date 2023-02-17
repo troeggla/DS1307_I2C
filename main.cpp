@@ -139,6 +139,33 @@ bool writeByteAtAddress(byte deviceId, byte registerAddress, byte data) {
   return true;
 }
 
+bool writeBytesStartingAt(byte deviceId, byte registerAddress, int numBytes, byte* data) {
+  sendStart();
+  sendDeviceId(deviceId);
+  sendBit(0b0);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  sendByte(registerAddress);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  for (int i=0; i<numBytes; i++) {
+    sendByte(data[i]);
+
+    if (!readAck()) {
+      return false;
+    }
+  }
+
+  sendStop();
+  return true;
+}
+
 void setup() {
   Serial.begin(115200);
 

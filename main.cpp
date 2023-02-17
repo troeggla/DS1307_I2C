@@ -63,6 +63,26 @@ void sendByte(byte data) {
   }
 }
 
+int readByte() {
+  pinMode(SDA, INPUT);
+
+  int result = 0;
+
+  for (int i=0; i<8; i++) {
+    digitalWrite(SCL, HIGH);
+    delayMicroseconds(10);
+
+    int bit = digitalRead(SDA);
+    result = (result << 1) + bit;
+
+    digitalWrite(SCL, LOW);
+    delayMicroseconds(10);
+  }
+
+  pinMode(SDA, OUTPUT);
+  return result;
+}
+
 void setup() {
   Serial.begin(115200);
 

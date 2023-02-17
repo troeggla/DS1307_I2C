@@ -83,6 +83,37 @@ int readByte() {
   return result;
 }
 
+byte readByteAtAddress(byte deviceId, byte registerAddress) {
+  sendStart();
+  sendDeviceId(deviceId);
+  sendBit(0b0);
+
+  if (!readAck()) {
+    return -1;
+  }
+
+  sendByte(registerAddress);
+
+  if (!readAck()) {
+    return -1;
+  }
+
+  sendStart();
+  sendDeviceId(0b1101000);
+  sendBit(0b1);
+
+  if (!readAck()) {
+    return -1;
+  }
+
+  int byte = readByte();
+
+  sendBit(0b1);
+  sendStop();
+
+  return byte;
+}
+
 void setup() {
   Serial.begin(115200);
 

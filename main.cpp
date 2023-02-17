@@ -194,6 +194,11 @@ void setup() {
 
   Serial.print("Writing data at 0x00: ");
   Serial.println((writeByteAtAddress(deviceId, 0x00, 0b01000000) == true) ? "true" : "false");
+
+  byte data[7] = { 0, convertToBcd(59), convertToBcd(23), 0, convertToBcd(28), convertToBcd(2), convertToBcd(23) };
+
+  Serial.print("Writing block data at 0x00: ");
+  Serial.println((writeBytesStartingAt(deviceId, 0x00, 7, data) == true) ? "true" : "false");
 }
 
 void loop() {

@@ -269,6 +269,11 @@ void setup() {
 
   Serial.print("Data read from 0x10: ");
   Serial.println(String((char*)buf));
+
+  Serial.print("Enabling oscillator: ");
+  Serial.println((writeByteAtAddress(deviceId, 0x07, 0b00010000) == true) ? "true" : "false");
+
+  Serial.println();
 }
 
 void loop() {

@@ -5,6 +5,20 @@
 
 byte deviceId = 0b1101000;
 
+int convertFromBcd(int bcd) {
+  int tens = ((bcd & 0b11110000) >> 4) * 10;
+  int ones = bcd & 0b00001111;
+
+  return tens + ones;
+}
+
+byte convertToBcd(int num) {
+  int ones = num % 10;
+  int tens = num / 10;
+
+  return (tens << 4) + ones;
+}
+
 void sendStart() {
   digitalWrite(SCL, HIGH);
 

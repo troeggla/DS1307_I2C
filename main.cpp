@@ -119,6 +119,12 @@ void setup() {
 
   pinMode(SDA, OUTPUT);
   pinMode(SCL, OUTPUT);
+
+  Serial.print("Byte at address 0x00: 0b");
+  Serial.println(readByteAtAddress(deviceId, 0x00), BIN);
+
+  Serial.print("Byte at address 0x07: 0b");
+  Serial.println(readByteAtAddress(deviceId, 0x07), BIN);
 }
 
 void loop() {

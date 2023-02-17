@@ -23,6 +23,7 @@ public:
   DS1307(uint8_t sdaPin, uint8_t sclPin) : device(DEVICE_ID, sdaPin, sclPin) {}
 
   bool enableClock(bool enable);
+  bool enableOscillator(bool enable);
   bool enableOscillator(bool enable, OscillatorFreq freq);
 
   bool setDateTime(int year, int month, int date, int hour, int minute, int second);

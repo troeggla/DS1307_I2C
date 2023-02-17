@@ -55,6 +55,10 @@ bool DS1307::enableOscillator(bool enable, OscillatorFreq freq) {
   return device.writeByteAtAddress(0x07, enableOsc);
 }
 
+bool DS1307::enableOscillator(bool enable) {
+  return enableOscillator(enable, OscillatorFreq::FREQ_1HZ);
+}
+
 bool DS1307::setDateTime(int year, int month, int date, int hours, int minutes, int seconds) {
   uint8_t* currentSecondValue = (uint8_t*)malloc(sizeof(uint8_t));
   bool success = device.readByteAtAddress(0x00, currentSecondValue);

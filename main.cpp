@@ -56,6 +56,13 @@ bool readAck() {
   return result == 0;
 }
 
+void sendByte(byte data) {
+  for (int i=0; i<8; i++) {
+    int bit = (data << i) & 0x80;
+    sendBit(bit);
+  }
+}
+
 void setup() {
   Serial.begin(115200);
 

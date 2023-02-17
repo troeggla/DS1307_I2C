@@ -218,6 +218,27 @@ bool readBytesStartingAt(byte deviceId, byte registerAddress, int numBytes, byte
   return true;
 }
 
+void printTime() {
+  byte result[8];
+  bool success = readBytesStartingAt(deviceId, 0x00, 8, result);
+
+  if (success) {
+    int seconds = convertFromBcd(result[0]);
+    int minutes = convertFromBcd(result[1]);
+    int hours = convertFromBcd(result[2]);
+    // int day = convertFromBcd(result[3]);
+    int date = convertFromBcd(result[4]);
+    int month = convertFromBcd(result[5]);
+    int year = convertFromBcd(result[6]);
+
+    char datetime[20];
+    sprintf(datetime, "20%02d-%02d-%02d %02d:%02d:%02d", year, month, date, hours, minutes, seconds);
+
+    Serial.print("Datetime: ");
+    Serial.println(datetime);
+  }
+}
+
 void setup() {
   Serial.begin(115200);
 

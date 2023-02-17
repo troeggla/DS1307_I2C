@@ -180,6 +180,44 @@ bool writeBytesStartingAt(byte deviceId, byte registerAddress, int numBytes, byt
   return true;
 }
 
+bool readBytesStartingAt(byte deviceId, byte registerAddress, int numBytes, byte* result) {
+  sendStart();
+  sendDeviceId(deviceId);
+  sendBit(0b0);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  sendByte(registerAddress);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  sendStart();
+  sendDeviceId(0b1101000);
+  sendBit(0b1);
+
+  if (!readAck()) {
+    return false;
+  }
+
+  for (int i=0; i<numBytes; i++) {
+    byte data = readByte();
+    result[i] = data;
+
+    if (i != numBytes - 1) {
+      sendBit(0b0);
+    }
+  }
+
+  sendBit(0b1);
+  sendStop();
+
+  return true;
+}
+
 void setup() {
   Serial.begin(115200);
 

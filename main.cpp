@@ -43,6 +43,19 @@ void sendDeviceId(byte address) {
   }
 }
 
+bool readAck() {
+  pinMode(SDA, INPUT);
+  digitalWrite(SCL, HIGH);
+  delayMicroseconds(10);
+
+  int result = digitalRead(SDA);
+  digitalWrite(SCL, LOW);
+  delayMicroseconds(10);
+
+  pinMode(SDA, OUTPUT);
+  return result == 0;
+}
+
 void setup() {
   Serial.begin(115200);
 

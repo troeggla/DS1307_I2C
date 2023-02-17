@@ -274,6 +274,9 @@ void setup() {
   Serial.println((writeByteAtAddress(deviceId, 0x07, 0b00010000) == true) ? "true" : "false");
 
   Serial.println();
+
+  pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), printTime, RISING);
 }
 
 void loop() {

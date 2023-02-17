@@ -36,6 +36,13 @@ void sendBit(int bit) {
   delayMicroseconds(10);
 }
 
+void sendDeviceId(byte address) {
+  for (int i=0; i<7; i++) {
+    int bit = (address << i) & 0x40;
+    sendBit(bit);
+  }
+}
+
 void setup() {
   Serial.begin(115200);
 

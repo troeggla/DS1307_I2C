@@ -23,6 +23,19 @@ void sendStop() {
   digitalWrite(SDA, HIGH);
 }
 
+void sendBit(int bit) {
+  if (bit == 0) {
+    digitalWrite(SDA, LOW);
+  } else {
+    digitalWrite(SDA, HIGH);
+  }
+
+  digitalWrite(SCL, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(SCL, LOW);
+  delayMicroseconds(10);
+}
+
 void setup() {
   Serial.begin(115200);
 

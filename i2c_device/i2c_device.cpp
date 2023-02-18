@@ -14,7 +14,7 @@ void I2CDevice::sendStart() {
   digitalWrite(sdaPin, HIGH);
   digitalWrite(sdaPin, LOW);
 
-  delay(10);
+  delayMicroseconds(5);
   digitalWrite(sclPin, LOW);
 }
 
@@ -24,8 +24,9 @@ void I2CDevice::sendStop() {
   digitalWrite(sdaPin, LOW);
   digitalWrite(sdaPin, HIGH);
 
-  delay(10);
+  delayMicroseconds(5);
   digitalWrite(sclPin, LOW);
+  delayMicroseconds(5);
 }
 
 void I2CDevice::sendBit(uint8_t bit) {
@@ -36,9 +37,9 @@ void I2CDevice::sendBit(uint8_t bit) {
   }
 
   digitalWrite(sclPin, HIGH);
-  delayMicroseconds(10);
+  delayMicroseconds(5);
   digitalWrite(sclPin, LOW);
-  delayMicroseconds(10);
+  delayMicroseconds(5);
 }
 
 void I2CDevice::sendDeviceId() {
@@ -58,11 +59,11 @@ void I2CDevice::sendByte(uint8_t data) {
 bool I2CDevice::readAck() {
   pinMode(sdaPin, INPUT);
   digitalWrite(sclPin, HIGH);
-  delayMicroseconds(10);
+  delayMicroseconds(5);
 
   int result = digitalRead(sdaPin);
   digitalWrite(sclPin, LOW);
-  delayMicroseconds(10);
+  delayMicroseconds(5);
 
   pinMode(sdaPin, OUTPUT);
   return result == 0;
@@ -75,13 +76,13 @@ uint8_t I2CDevice::readByte() {
 
   for (int i=0; i<8; i++) {
     digitalWrite(sclPin, HIGH);
-    delayMicroseconds(10);
+    delayMicroseconds(5);
 
     int bit = digitalRead(sdaPin);
     result = (result << 1) + bit;
 
     digitalWrite(sclPin, LOW);
-    delayMicroseconds(10);
+    delayMicroseconds(5);
   }
 
   pinMode(sdaPin, OUTPUT);

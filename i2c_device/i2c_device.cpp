@@ -22,8 +22,10 @@ void I2CDevice::sendStop() {
   digitalWrite(sclPin, HIGH);
 
   digitalWrite(sdaPin, LOW);
-  delay(10);
   digitalWrite(sdaPin, HIGH);
+
+  delay(10);
+  digitalWrite(sclPin, LOW);
 }
 
 void I2CDevice::sendBit(uint8_t bit) {

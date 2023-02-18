@@ -42,18 +42,21 @@ void I2CDevice::sendBit(uint8_t bit) {
   delayMicroseconds(5);
 }
 
-void I2CDevice::sendDeviceId() {
-  for (int i=0; i<7; i++) {
-    int bit = (deviceAddress << i) & 0x40;
+void I2CDevice::sendNBits(uint8_t data, unsigned int numBits) {
+  int mask = 1 << (numBits - 1);
+
+  for (int i=0; i<numBits; i++) {
+    int bit = (data << i) & mask;
     sendBit(bit);
   }
 }
 
+void I2CDevice::sendDeviceId() {
+  sendNBits(deviceAddress, 7);
+}
+
 void I2CDevice::sendByte(uint8_t data) {
-  for (int i=0; i<8; i++) {
-    int bit = (data << i) & 0x80;
-    sendBit(bit);
-  }
+  sendNBits(data, 8);
 }
 
 bool I2CDevice::readAck() {

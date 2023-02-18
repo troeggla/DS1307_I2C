@@ -13,6 +13,7 @@ class I2CDevice {
   void sendStop();
 
   void sendBit(uint8_t bit);
+  void sendNBits(uint8_t data, unsigned int numBits);
   void sendByte(uint8_t byte);
   void sendDeviceId();
 

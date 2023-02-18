@@ -15,17 +15,17 @@ uint8_t DS1307::convertToBcd(int value) {
 }
 
 bool DS1307::enableClock(bool enable) {
-  uint8_t* currentValue = (uint8_t*)malloc(sizeof(uint8_t));
-  bool success = device.readByteAtAddress(0x00, currentValue);
+  uint8_t currentValue = 0;
+  bool success = device.readByteAtAddress(0x00, &currentValue);
 
   if (!success) {
     return false;
   }
 
   uint8_t enableClockByte = (enable == true) ? (
-    *currentValue & 0b01111111
+    currentValue & 0b01111111
   ) : (
-    *currentValue | 0b10000000
+    currentValue | 0b10000000
   );
 
   return device.writeByteAtAddress(0x00, enableClockByte);
@@ -60,14 +60,14 @@ bool DS1307::enableOscillator(bool enable) {
 }
 
 bool DS1307::setDateTime(int year, int month, int date, int hours, int minutes, int seconds) {
-  uint8_t* currentSecondValue = (uint8_t*)malloc(sizeof(uint8_t));
-  bool success = device.readByteAtAddress(0x00, currentSecondValue);
+  uint8_t currentSecondValue = 0;
+  bool success = device.readByteAtAddress(0x00, &currentSecondValue);
 
   if (!success) {
     return false;
   }
 
-  uint8_t newSecondValue = (*currentSecondValue & 0b10000000) | convertToBcd(seconds);
+  uint8_t newSecondValue = (currentSecondValue & 0b10000000) | convertToBcd(seconds);
 
   uint8_t data[7] = {
     newSecondValue, convertToBcd(minutes), convertToBcd(hours),
@@ -75,7 +75,6 @@ bool DS1307::setDateTime(int year, int month, int date, int hours, int minutes, 
     convertToBcd(date), convertToBcd(month), convertToBcd(year % 100)
   };
 
-  free(currentSecondValue);
   return device.writeBytesStartingAt(0x00, 7, data);
 }
 

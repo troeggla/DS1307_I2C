@@ -29,3 +29,18 @@ String Time::getAMPM() {
 
   return "AM";
 }
+
+String Time::getFormattedTime() {
+  char time[9];
+
+  sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
+  return String(time);
+}
+
+
+String Time::getFormattedTime() {
+  char time[12];
+
+  sprintf(time, "%02d:%02d:%02d %s", get12HourClockHour(), minutes, seconds, getAMPM());
+  return String(time);
+}

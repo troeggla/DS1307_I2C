@@ -17,6 +17,9 @@ public:
 
   int get12HourClockHour();
   String getAMPM();
+
+  String getFormattedTime();
+  String getFormatted12HourClockTime();
 };
 
 #endif

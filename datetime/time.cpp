@@ -38,7 +38,7 @@ String Time::getFormattedTime() {
 }
 
 
-String Time::getFormattedTime() {
+String Time::getFormatted12HourClockTime() {
   char time[12];
 
   sprintf(time, "%02d:%02d:%02d %s", get12HourClockHour(), minutes, seconds, getAMPM());

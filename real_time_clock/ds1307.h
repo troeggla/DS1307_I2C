@@ -2,7 +2,11 @@
 #define DS1307_H
 
 #include <Arduino.h>
+
 #include "../i2c_device/i2c_device.h"
+#include "../datetime/date.h"
+#include "../datetime/time.h"
+#include "../datetime/date_time.h"
 
 #define DEVICE_ID 0b1101000
 
@@ -27,6 +31,7 @@ public:
   bool enableOscillator(bool enable, OscillatorFreq freq);
 
   bool setDateTime(int year, int month, int date, int hour, int minute, int second);
+  DateTime getDateTime();
   String getFormattedDateTime();
 };
 

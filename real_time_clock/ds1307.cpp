@@ -78,7 +78,7 @@ bool DS1307::setDateTime(int year, int month, int date, int hours, int minutes, 
   return device.writeBytesStartingAt(0x00, 7, data);
 }
 
-String DS1307::getFormattedDateTime() {
+DateTime DS1307::getDateTime() {
   uint8_t result[8];
   bool success = device.readBytesStartingAt(0x00, 8, result);
 
@@ -86,15 +86,30 @@ String DS1307::getFormattedDateTime() {
     int seconds = convertFromBcd(result[0]);
     int minutes = convertFromBcd(result[1]);
     int hours = convertFromBcd(result[2]);
-    int date = convertFromBcd(result[4]);
+    int day = convertFromBcd(result[4]);
     int month = convertFromBcd(result[5]);
     int year = convertFromBcd(result[6]);
 
-    char datetime[20];
-    sprintf(datetime, "20%02d-%02d-%02d %02d:%02d:%02d", year, month, date, hours, minutes, seconds);
+    Time time = Time(hours, minutes, seconds);
+    Date date = Date(day, month, year);
+    DateTime dateTime = DateTime(time, date);
 
-    return String(datetime);
+    return dateTime;
   }
 
-  return "";
+  Time time = Time(0, 0, 0);
+  Date date = Date(0, 0, 0);
+  DateTime dateTime = DateTime(time, date);
+
+  return dateTime;
+}
+
+String DS1307::getFormattedDateTime() {
+  DateTime dateTime = getDateTime();
+
+  if (dateTime.getDate().getYear() == 0) {
+    return "";
+  }
+
+  return "20" + dateTime.getFormattedDateTime();
 }

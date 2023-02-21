@@ -10,8 +10,6 @@ void printTime() {
 void setup() {
   Serial.begin(115200);
 
-  clock.enableClock(false);
-  clock.setDateTime(2023, 02, 28, 23, 59, 30);
   clock.enableOscillator(true, OscillatorFreq::FREQ_1HZ);
   clock.enableClock(true);
 

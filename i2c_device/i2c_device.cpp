@@ -45,7 +45,7 @@ void I2CDevice::sendBit(uint8_t bit) {
 void I2CDevice::sendNBits(uint8_t data, unsigned int numBits) {
   int mask = 1 << (numBits - 1);
 
-  for (int i=0; i<numBits; i++) {
+  for (unsigned int i=0; i<numBits; i++) {
     int bit = (data << i) & mask;
     sendBit(bit);
   }
